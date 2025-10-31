@@ -38,14 +38,23 @@
 
         // Добавляем новый пункт меню в левую панель
         if (Lampa.Settings.main && Lampa.Settings.main() && !Lampa.Settings.main().render().find('[data-component="valeravibrator"]').length) {
-            const field = Lampa.Template.get('button_main', {
-                text: 'Hentai Ocean',
-                href: 'valeravibrator', // Это имя компонента, который мы зарегистрировали
-                data: {
-                    component: 'valeravibrator'
-                }
-            });
-            Lampa.Settings.main().render().find('[data-component="more"]').after(field); // Добавляем после кнопки "Еще"
+            const html = Lampa.Utils.html(`<div class="settings-folder selector" data-component="valeravibrator">
+                <div class="settings-folder__icon">
+                    <svg height="46" viewBox="0 0 42 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="1.5" y="26.5" width="39" height="18" rx="1.5" stroke="white" stroke-width="3"/>
+                    <circle cx="9.5" cy="35.5" r="3.5" fill="white"/>
+                    <circle cx="26.5" cy="35.5" r="2.5" fill="white"/>
+                    <circle cx="32.5" cy="35.5" r="2.5" fill="white"/>
+                    <circle cx="21.5" cy="5.5" r="5.5" fill="white"/>
+                    <rect x="31" y="4" width="11" height="3" rx="1.5" fill="white"/>
+                    <rect y="4" width="11" height="3" rx="1.5" fill="white"/>
+                    <rect x="20" y="14" width="3" height="7" rx="1.5" fill="white"/>
+                    </svg>
+                </div>
+                <div class="settings-folder__name">Hentai Ocean</div>
+            </div>`);
+
+            Lampa.Settings.main().render().find('[data-component="more"]').after(html);
             Lampa.Settings.main().update();
         }
 
