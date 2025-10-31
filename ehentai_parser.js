@@ -33,8 +33,8 @@
 
 
 
-    function start() {
-        console.log('Hentai Ocean Parser плагин запущен!');
+    function addHentaiOceanMenuItem() {
+        console.log('Hentai Ocean Parser: Попытка добавить пункт меню.');
 
         if (!Lampa.Lang) {
             Lampa.Lang = {
@@ -57,7 +57,6 @@
             },
         });
 
-        // Добавляем новый пункт меню в левую панель
         if (Lampa.Settings.main && Lampa.Settings.main() && !Lampa.Settings.main().render().find('[data-component="valeravibrator"]').length) {
             const field = $(Lampa.Lang.translate(`<div class="settings-folder selector" data-component="valeravibrator">
                 <div class="settings-folder__icon">
@@ -77,8 +76,16 @@
 
             Lampa.Settings.main().render().find('[data-component="more"]').after(field);
             Lampa.Settings.main().update();
+            console.log('Hentai Ocean Parser: Пункт меню добавлен.');
+        } else {
+            console.log('Hentai Ocean Parser: Пункт меню уже существует или Lampa.Settings.main не готов.');
         }
+    }
 
+    function start() {
+        console.log('Hentai Ocean Parser: Плагин инициализирован.');
+
+        // Регистрация компонента
         Lampa.Component.add('valeravibrator', function() {
             var component = new Lampa.Component({
                 name: 'valeravibrator',
@@ -227,6 +234,11 @@
                 }
             });
             return component;
+        });
+
+        // Регистрация пункта меню после полной готовности Lampa.app
+        Lampa.Listener.follow('app', 'ready', () => {
+            addHentaiOceanMenuItem();
         });
     }
 
