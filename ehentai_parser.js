@@ -34,10 +34,21 @@
 
 
     function start() {
-        // Здесь будет логика инициализации плагина
-        console.log('E-Hentai Parser плагин запущен!');
+        console.log('Hentai Ocean Parser плагин запущен!');
 
-        // Пример регистрации компонента (замени на свою логику)
+        // Добавляем новый пункт меню в левую панель
+        if (Lampa.Settings.main && Lampa.Settings.main() && !Lampa.Settings.main().render().find('[data-component="valeravibrator"]').length) {
+            const field = Lampa.Template.get('button_main', {
+                text: 'Hentai Ocean',
+                href: 'valeravibrator', // Это имя компонента, который мы зарегистрировали
+                data: {
+                    component: 'valeravibrator'
+                }
+            });
+            Lampa.Settings.main().render().find('[data-component="more"]').after(field); // Добавляем после кнопки "Еще"
+            Lampa.Settings.main().update();
+        }
+
         Lampa.Component.add('valeravibrator', function() {
             var component = new Lampa.Component({
                 name: 'valeravibrator',
