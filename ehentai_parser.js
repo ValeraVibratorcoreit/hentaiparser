@@ -36,9 +36,30 @@
     function start() {
         console.log('Hentai Ocean Parser плагин запущен!');
 
+        if (!Lampa.Lang) {
+            Lampa.Lang = {
+                add: (data) => {
+                    this.lang_data = data;
+                },
+                translate: (key) => {
+                    return this.lang_data[key] ? this.lang_data[key].ru : key;
+                }
+            };
+        }
+
+        Lampa.Lang.add({
+            title_hentaiocean: {
+                ru: 'Hentai Ocean',
+                uk: 'Hentai Ocean',
+                en: 'Hentai Ocean',
+                zh: 'Hentai Ocean',
+                bg: 'Hentai Ocean',
+            },
+        });
+
         // Добавляем новый пункт меню в левую панель
         if (Lampa.Settings.main && Lampa.Settings.main() && !Lampa.Settings.main().render().find('[data-component="valeravibrator"]').length) {
-            const html = Lampa.Utils.html(`<div class="settings-folder selector" data-component="valeravibrator">
+            const field = $(Lampa.Lang.translate(`<div class="settings-folder selector" data-component="valeravibrator">
                 <div class="settings-folder__icon">
                     <svg height="46" viewBox="0 0 42 46" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect x="1.5" y="26.5" width="39" height="18" rx="1.5" stroke="white" stroke-width="3"/>
@@ -51,10 +72,10 @@
                     <rect x="20" y="14" width="3" height="7" rx="1.5" fill="white"/>
                     </svg>
                 </div>
-                <div class="settings-folder__name">Hentai Ocean</div>
-            </div>`);
+                <div class="settings-folder__name">#{title_hentaiocean}</div>
+            </div>`));
 
-            Lampa.Settings.main().render().find('[data-component="more"]').after(html);
+            Lampa.Settings.main().render().find('[data-component="more"]').after(field);
             Lampa.Settings.main().update();
         }
 
